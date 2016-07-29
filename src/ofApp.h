@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#define NUM 1000  //小さい箱の数を指定
+#define NUM 500  //小さい箱の数を指定
 
 class ofApp : public ofBaseApp{
     

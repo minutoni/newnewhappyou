@@ -31,7 +31,7 @@ void ofApp::setup(){
     BackgroundImage.loadImage("wall.jpg"); //画像を読み込む
     //BackgroundImage.draw(0, 0, ofGetWidth(),ofGetHeight());
     
-    sound.loadSound("voyage(orchestra).mp3"); //音楽を読み込む。
+    sound.loadSound("HistoriaOpeningtheme.mp3"); //音楽を読み込む。
     sound.play();//音楽を再生する。
     sound.setLoop(true);
     
@@ -52,7 +52,7 @@ void ofApp::setup(){
     for(int i = 0; i < NUM; i++){
         loc_x[i] = ofGetHeight()/2; //円のx座標初期位置
         loc_y[i] = ofGetWidth()/2; //円のy座標初期位置
-        //loc_z[i] = -9223372036854775807; //円のz座標初期位置
+        loc_z[i] = -9223372036854775807; //円のz座標初期位置
         
         speed_x[i] = ofRandom(-10, 50); //x軸方向スピード初期値
         speed_y[i] = ofRandom(-30, 20); //y軸方向スピード初期値
@@ -84,9 +84,9 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetVerticalSync(true); //画面の垂直同期をONに
     ofEnableAlphaBlending(); //透明度を有効化
-    //ofToggleFullscreen(); //フルスクリーンにする。
+    ofToggleFullscreen(); //フルスクリーンにする。
     
-    boxsize = 5; //boxの大きさ
+    boxsize = 6; //boxの大きさ
     for (int i=0; i<NUM; i++ ){
         //boxの位置をランダムにする。
         mBox[i].setPosition(ofRandom(-500, 500),ofRandom(-500, 500),ofRandom(-500, 500));
@@ -157,6 +157,8 @@ void ofApp::update(){
 void ofApp::draw(){
     
     
+    //BackgroundImage.draw( 0, 0,ofGetWidth(), ofGetHeight());   //***
+    
     
     //秒の取得
     int ms = ofGetElapsedTimeMillis() % 1000;
@@ -168,6 +170,10 @@ void ofApp::draw(){
     float h = ofGetHours()%12 + (m/60);
     
     ofBackground(0, 0, 0);
+    //BackgroundImage.draw( 0, 0,ofGetWidth(), ofGetHeight());   //***
+    
+    
+
     
     
     
@@ -223,10 +229,9 @@ void ofApp::draw(){
     
     //------------------------------------------------------------球
     
-    
     //---------------------------------------------------------------時計//
         
-        
+    ofPushMatrix();
     
     
     //時計の大きさ
@@ -238,7 +243,7 @@ void ofApp::draw(){
     
     
     //時計の背景
-    ofSetColor(255, 255, 255);
+    ofSetColor(0, 144, 255);
     ofFill();
     
     //分の目盛を描く
@@ -253,7 +258,7 @@ void ofApp::draw(){
         ofCircle(clockSize, 0, 4);
     }
     
-    ofSetColor(255, 255, 255);
+    ofSetColor(0, 144, 255);
 
     //秒針
     
@@ -263,7 +268,7 @@ void ofApp::draw(){
     ofLine(0 , 0, 0, -clockSize);
     ofPopMatrix();
     
-    ofSetColor(255, 255, 255);
+    ofSetColor(0, 144, 255);
     
     //分
     ofPushMatrix();
@@ -272,7 +277,7 @@ void ofApp::draw(){
     ofLine( 0, 0, 0, -clockSize);
     ofPopMatrix();
     
-    ofSetColor(255, 255, 255);
+    ofSetColor(0, 144, 255);
     
     //時針
     ofPushMatrix();
@@ -281,7 +286,8 @@ void ofApp::draw(){
     ofLine( 0, 0, 0, -clockSize*0.75);
     ofPopMatrix();
     
-    ofSetColor(255, 255, 255);
+    ofSetColor(0, 144, 255);
+    
     
     
     
@@ -290,7 +296,6 @@ void ofApp::draw(){
     //全画面を半透明の黒でフェード
 //    ofSetColor(0, 0, 255, 23);
 //    ofRect(0, 0, ofGetWidth(), ofGetHeight());
-    
     
     
     
@@ -321,19 +326,16 @@ void ofApp::draw(){
     
     
     
-    ofPushMatrix();
     
     ofRotateY(ofGetFrameNum()); //Y軸を軸にして回転させる。
     
-    int alpha = abs(vec.x) + abs(vec.y);  //x方向の速度　＋　Y方向の速度
+    int alpha = abs(vec.x) + abs(vec.y) ;  //x方向の速度　＋　Y方向の速度
     ofSetColor(100, 200, 255, 255 - alpha);
     
     
     for (int i=0; i<NUM; i++) {
         mBox[i].draw(); //たくさんの小さいboxを描画。
     }
-    
-    ofPopMatrix();
     
     
     ofSetColor(255,255,255,(ofGetFrameNum()*6)%120); //（boxの色を指定(点滅)）
@@ -350,14 +352,23 @@ void ofApp::draw(){
     
     cam.end();
     
+    ofPopMatrix();
+    
     
     
     p.x = mouseX; //前のマウスのポイントを保存。(pointX)
     p.y = mouseY; //前のマウスのポイントを保存。(pointY)
     
-    BackgroundImage.draw( 0, 0 ,-3000);   //***
     
+    //ofPushMatrix();
     
+    //ofTranslate(0,0);
+
+    //BackgroundImage.draw(ofGetWidth(),ofGetHeight(),-3000);   //***
+    
+    //ofPopMatrix();
+    
+    BackgroundImage.draw(-3100, -1750, -3000);
     
     
 }
